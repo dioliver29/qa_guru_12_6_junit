@@ -5,10 +5,8 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
+import quru.qa.domain.FilmSubmenuItem;
 
 import java.util.stream.Stream;
 
@@ -65,10 +63,24 @@ public class SearchTest {
     }
 
     @MethodSource("methodSourceExampleTest")
-    @ParameterizedTest(name = "Поиск типа {0} на hd.zetflix.online, ожидает наличие: {1}")
+    @ParameterizedTest(name = "Поиск типа {0} на hd.zetflix.online")
     void methodSourceExampleTest(String showType) {
         open(showType);
     }
 
+    @EnumSource(FilmSubmenuItem.class)
+    @ParameterizedTest(name = "Поиск категории фильма на hd.zetflix.online")
+    void searchFilmSubmenuTest(FilmSubmenuItem filmCategory) {
+        open("https://hd.zetfix.online");
+
+        $$(".submenu")
+                .find(Condition.text("Фильмы")).hover();
+
+        $$(".hidden-menu .hidden-ul visible")
+                .find(Condition.text(filmCategory.rusName))
+                .click();
+
+
+    }
 }
 
