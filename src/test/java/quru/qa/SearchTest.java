@@ -76,7 +76,7 @@ public class SearchTest {
         $$(".submenu")
                 .find(Condition.text("Фильмы")).hover();
 
-        $$(".hidden-menu .hidden-ul visible")
+        $$(".submenu .hidden-ul > li")
                 .find(Condition.text(filmCategory.rusName))
                 .click();
 
